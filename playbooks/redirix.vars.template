@@ -1,0 +1,9 @@
+redirix_version: "v1.0.0"
+redirix_bin_path: "/usr/local/bin/redirix"
+redirix_user: "redirix"
+redirix_pass: "changeme"
+redirix_redis_url: "redis://writer:secret@localhost:6379"
+redirix_prefix: "redirix:proxy"
+redirix_port: 1080
+redirix_ttl: "10s"
+redirix_interval: "5s"

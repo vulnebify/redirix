@@ -25,3 +25,6 @@ docker-compose.override.yml
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Ansible
+redirix.vars

@@ -70,6 +70,24 @@ docker run --rm --network=host redirix \
 
 ---
 
+## ⚙️ Ansible Deployment
+
+You can deploy Redirix across multiple servers using Ansible.
+
+### Files:
+- `install-redirix.yml` – the Ansible playbook
+- `inventory.ini` – defines target hosts
+- `redirix.vars` – runtime variables
+- `redirix.vars.template` – safe template to copy from
+
+### Run:
+
+```bash
+cd playbooks
+ansible-playbook -i inventory.ini install-redirix.yml -e @redirix.vars
+```
+---
+
 ## 🧪 Testing
 
 Start Redis (with ACL) via Docker Compose:
