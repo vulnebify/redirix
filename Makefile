@@ -10,9 +10,8 @@ all: build
 build:
 	mkdir -p $(BUILD_DIR)
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
-	go build -ldflags "-X 'redirix/internal/app.Version=$(VERSION)'" \
+	go build -ldflags "-X=github.com/vulnebify/redirix/internal/app.Version=$(VERSION)" \
 	-o $(BUILD_DIR)/$(APP_NAME) $(CMD_PATH)
 
 clean:
 	rm -rf $(BUILD_DIR)
-
