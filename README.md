@@ -1,6 +1,6 @@
 # Redirix
 
-**Redirix** is a lightweight, authenticated SOCKS5 proxy that registers itself in Redis for further usage, such as distributed scanning and service discovery.
+**Redirix** is a lightweight, authenticated SOCKS5 proxy server that registers itself in Redis for further usage, such as distributed scanning and service discovery.
 
 [![Test Redirix](https://github.com/vulnebify/redirix/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/vulnebify/redirix/actions/workflows/test.yaml)
 [![Release Redirix](https://github.com/vulnebify/redirix/actions/workflows/release.yaml/badge.svg)](https://github.com/vulnebify/redirix/actions/workflows/release.yaml)
