@@ -36,10 +36,10 @@ docker build -t redirix .
 ```bash
 ./bin/redirix \
   --redis-url=redis://writer:secret@localhost:6380 \
-  --prefix=redirix:proxy \
-  --auth-user=red \
-  --auth-pass=securepass \
-  --port=1080
+  --redis-prefix=redirix:proxy \
+  --proxy-user=red \
+  --proxy-pass=securepass \
+  --proxy-port=1080
 ```
 
 ### Docker:
@@ -47,10 +47,10 @@ docker build -t redirix .
 ```bash
 docker run --rm --network=host redirix \
   --redis-url=redis://writer:secret@localhost:6380 \
-  --prefix=redirix:proxy \
-  --auth-user=red \
-  --auth-pass=securepass \
-  --port=1080
+  --redis-prefix=redirix:proxy \
+  --proxy-user=red \
+  --proxy-pass=securepass \
+  --proxy-port=1080
 ```
 
 
