@@ -39,8 +39,8 @@ func Run(ctx context.Context, args []string) error {
 	fs := flag.NewFlagSet("redirix", flag.ContinueOnError)
 
 	// Redis configuration
+	fs.StringVar(&redisURL, "redis-url", "", "Redis connection URL")
 	fs.StringVar(&redisKeyPrefix, "redis-prefix", "redirix:proxy", "Redis key prefix")
-	fs.StringVar(&redisURL, "redis-url", "rediss://username:password@localhost:6379", "Redis connection URL")
 	fs.DurationVar(&redisTTL, "redis-ttl", 10*time.Second, "TTL for Redis key")
 	fs.DurationVar(&pingInterval, "redis-interval", 5*time.Second, "Interval for Redis heartbeat")
 
@@ -51,6 +51,12 @@ func Run(ctx context.Context, args []string) error {
 
 	if err := fs.Parse(args); err != nil {
 		return err
+	}
+
+	if redisURL == "" {
+		fmt.Fprintln(os.Stderr, "Error: --redis-url is required")
+		fs.Usage()
+		os.Exit(1)
 	}
 
 	ip := getLocalIP()
