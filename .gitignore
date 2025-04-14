@@ -8,9 +8,6 @@
 *.tmp
 *.cache
 
-# Build output
-redirix
-
 # IDE/editor files
 .vscode/
 .idea/
@@ -24,9 +21,6 @@ coverage.out
 # Docker
 *.tar
 docker-compose.override.yml
-
-# Ignore local binaries if not in /bin
-redirix
 
 # OS metadata
 .DS_Store
