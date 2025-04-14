@@ -17,9 +17,6 @@ redirix
 *.swp
 *.swo
 
-# Dependency files
-go.sum
-
 # Test output
 coverage.out
 *.prof
