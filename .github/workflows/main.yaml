@@ -4,15 +4,10 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**.md'
-  pull_request:
-  workflow_dispatch:
-
-  # Run release job only on tag push
-  push:
     tags:
       - 'v*.*.*'
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   test:

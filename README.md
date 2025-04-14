@@ -6,7 +6,7 @@
 
 ## ✨ Features
 
-- 🔐 SOCKS5 proxy with optional authentication
+- 🔐 SOCKS5 proxy with authentication
 - 📡 Auto-registers to Redis with TTL
 - 🐳 Docker-ready & GitHub Actions integrated
 - ⚡ Built with Go, deploy anywhere
