@@ -1,0 +1,36 @@
+# Go
+/bin/
+/bin/*
+*.exe
+*.out
+*.test
+*.log
+*.tmp
+*.cache
+
+# Build output
+redirix
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependency files
+go.sum
+
+# Test output
+coverage.out
+*.prof
+
+# Docker
+*.tar
+docker-compose.override.yml
+
+# Ignore local binaries if not in /bin
+redirix
+
+# OS metadata
+.DS_Store
+Thumbs.db

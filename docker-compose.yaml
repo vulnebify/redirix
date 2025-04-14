@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis/redis-acl.conf:/usr/local/etc/redis/redis-acl.conf:ro
+    command: ["redis-server", "--aclfile", "/usr/local/etc/redis/redis-acl.conf"]
