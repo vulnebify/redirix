@@ -29,6 +29,17 @@ var (
 )
 
 func Run(ctx context.Context, args []string) error {
+	asciiArt := `
+ ____   _____  ____   ___  ____   ___ __  __
+|  _ \ | ____||  _ \ |_ _||  _ \ |_ _|\ \/ /
+| |_) ||  _|  | | | | | | | |_) | | |  \  / 
+|  _ < | |___ | |_| | | | |  _ <  | |  /  \ 
+|_| \_\|_____||____/ |___||_| \_\|___|/_/\_\
+                                            
+ `
+	fmt.Println(asciiArt)
+	fmt.Println("Redirix is a SOCKS5 proxy server that registers in Redis for dynamic use in distributed systems. See more https://github.com/vulnebify/redirix")
+	fmt.Println("")
 	for _, arg := range args {
 		if arg == "--version" || arg == "-v" {
 			fmt.Println("Redirix version:", Version)
