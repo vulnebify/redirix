@@ -73,7 +73,7 @@ var serveCmd = &cobra.Command{
 
 func init() {
 	// Redis configuration
-	serveCmd.Flags().StringVar(&redisURL, "redis-url", getRedisURL(), "Redis connection URL")
+	serveCmd.Flags().StringVar(&redisURL, "redis-url", getRedisURL(), "Redis connection URL (overrides REDIRIX_REDIS_URL)")
 	serveCmd.Flags().StringVar(&redisKeyPrefix, "redis-prefix", "redirix:proxy", "Redis key prefix")
 	serveCmd.Flags().DurationVar(&redisTTL, "redis-ttl", 10*time.Second, "TTL for Redis key")
 	serveCmd.Flags().DurationVar(&pingInterval, "redis-interval", 5*time.Second, "Interval for Redis heartbeat")
