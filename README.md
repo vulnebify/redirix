@@ -37,13 +37,13 @@ docker build -t redirix .
 ### Local binary:
 
 ```bash
-./bin/redirix --redis-url=redis://writer:secret@localhost:6380 
+./bin/redirix serve --redis-url=redis://writer:secret@localhost:6380 
 ```
 
 ### Docker:
 
 ```bash
-docker run --rm --network=host redirix --redis-url=redis://writer:secret@localhost:6380
+docker run --rm --network=host redirix serve --redis-url=redis://writer:secret@localhost:6380
 ```
 
 ---
@@ -60,24 +60,6 @@ docker run --rm --network=host redirix --redis-url=redis://writer:secret@localho
 | `--proxy-user`     | Proxy username                    | `redirix`       |
 | `--proxy-pass`     | Proxy password                    | *(generated)*   |
 
----
-
-## ⚙️ Ansible Deployment
-
-You can deploy Redirix across multiple servers using Ansible.
-
-### Files:
-- `install-redirix.yml` – the Ansible playbook
-- `inventory.ini` – defines target hosts
-- `redirix.vars` – runtime variables
-- `redirix.vars.template` – safe template to copy from
-
-### Run:
-
-```bash
-cd playbooks
-ansible-playbook -i inventory.ini install-redirix.yml -e @redirix.vars
-```
 ---
 
 ## 🧪 Testing

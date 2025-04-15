@@ -1,4 +1,4 @@
-package app
+package main
 
 import (
 	"context"
@@ -13,33 +13,31 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-func TestRunWritesToRedis(t *testing.T) {
+func TestServeWritesToRedis(t *testing.T) {
 	assert := require.New(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	ctx := context.Background()
 
-	// Generate unique test prefix
 	testID := fmt.Sprintf("test-%d", time.Now().UnixNano())
 	prefix := fmt.Sprintf("redirix:test:%s", testID)
 
-	args := []string{
-		"-redis-url=redis://writer:secret@localhost:6380",
-		"-redis-prefix=" + prefix,
-		"-redis-ttl=5s",
-		"-redis-interval=2s",
-		"-proxy-port=2000",
-		"-proxy-user=testuser",
-		"-proxy-pass=testpass",
-	}
+	rootCmd.SetArgs([]string{
+		"serve",
+		"--redis-url=redis://writer:secret@localhost:6380",
+		"--redis-prefix=" + prefix,
+		"--redis-ttl=5s",
+		"--redis-interval=2s",
+		"--proxy-port=2000",
+		"--proxy-user=testuser",
+		"--proxy-pass=testpass",
+	})
 
 	go func() {
-		err := Run(ctx, args) // replace with actual import alias if needed
+		err := rootCmd.Execute()
 		if err != nil {
-			t.Errorf("Run failed: %v", err)
+			t.Errorf("Execution failed: %v", err)
 		}
 	}()
 
-	// Connect as scanner (read-only)
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6380",
 		Username: "reader",
@@ -48,15 +46,15 @@ func TestRunWritesToRedis(t *testing.T) {
 	})
 	defer rdb.Close()
 
-	// Wait and check for key
 	time.Sleep(3 * time.Second)
+
 	keys, err := rdb.Keys(ctx, prefix+":*").Result()
 	assert.NoError(err)
-	assert.NotEmpty(keys, "expected redis key not found")
+	assert.NotEmpty(keys)
 
 	val, err := rdb.Get(ctx, keys[0]).Result()
 	assert.NoError(err)
-	assert.Contains(val, "socks5://testuser:testpass@", "unexpected value format")
+	assert.Contains(val, "socks5://testuser:testpass@", "Value mismatch")
 
 	fmt.Println("✅ Found key:", keys[0])
 	fmt.Println("🔑 Value:", val)
@@ -64,33 +62,31 @@ func TestRunWritesToRedis(t *testing.T) {
 
 func TestRunAndProxyConnectivity(t *testing.T) {
 	assert := require.New(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-	defer cancel()
 
 	testID := fmt.Sprintf("test-%d", time.Now().UnixNano())
 	prefix := fmt.Sprintf("redirix:test:%s", testID)
 	port := 2099
 
-	args := []string{
-		"-redis-url=redis://writer:secret@localhost:6380",
-		"-redis-prefix=" + prefix,
-		"-redis-ttl=5s",
-		"-redis-interval=2s",
-		fmt.Sprintf("-proxy-port=%d", port),
-		"-proxy-user=testuser",
-		"-proxy-pass=testpass",
-	}
+	rootCmd.SetArgs([]string{
+		"serve",
+		"--redis-url=redis://writer:secret@localhost:6380",
+		"--redis-prefix=" + prefix,
+		"--redis-ttl=5s",
+		"--redis-interval=2s",
+		fmt.Sprintf("--proxy-port=%d", port),
+		"--proxy-user=testuser",
+		"--proxy-pass=testpass",
+	})
 
 	go func() {
-		err := Run(ctx, args)
+		err := rootCmd.Execute()
 		if err != nil {
 			t.Errorf("Run failed: %v", err)
 		}
 	}()
 
-	time.Sleep(2 * time.Second) // wait for proxy to start
+	time.Sleep(3 * time.Second)
 
-	// test connectivity through the proxy
 	dialer, err := proxy.SOCKS5("tcp", fmt.Sprintf("127.0.0.1:%d", port), &proxy.Auth{
 		User:     "testuser",
 		Password: "testpass",
@@ -107,4 +103,6 @@ func TestRunAndProxyConnectivity(t *testing.T) {
 	assert.NoError(err)
 	defer resp.Body.Close()
 	assert.Equal(http.StatusOK, resp.StatusCode)
+
+	fmt.Println("✅ Proxy connection to example.com succeeded")
 }
