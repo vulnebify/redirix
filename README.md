@@ -52,7 +52,7 @@ docker run --rm --network=host redirix serve --redis-url=redis://writer:secret@l
 
 | Flag               | Description                       | Default         |
 |--------------------|-----------------------------------|-----------------|
-| `--redis-url`      | Redis connection string           | *required*      |
+| `--redis-url`      | Redis connection string           | *optional*      |
 | `--redis-prefix`   | Redis key prefix                  | `redirix:proxy` |
 | `--redis-ttl`      | TTL for Redis registration        | `10s`           |
 | `--redis-interval` | Ping interval to Redis            | `5s`            |
