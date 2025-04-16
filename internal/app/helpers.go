@@ -51,7 +51,7 @@ func ParseRedisOptions(rawURL string) (*redis.Options, error) {
 	}, nil
 }
 
-func StartRedisHeartbeat(ctx context.Context, rdb *redis.Client, hostname, ip, prefix, value string, ttl, interval time.Duration) {
+func StartRedisHeartbeat(ctx context.Context, rdb *redis.Client, hostname, value, prefix string, ttl, interval time.Duration) {
 	key := fmt.Sprintf("%s:%s", prefix, hostname)
 
 	for {
